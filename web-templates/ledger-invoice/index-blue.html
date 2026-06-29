@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- LEDGER — a clean, print-ready invoice template. Edit {{fields}}, set --accent.
+     Line totals + grand total compute automatically. Cmd/Ctrl+P → PDF. No deps. -->
+<title>Invoice {{0001}} — {{Your Business}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --accent:#1f6feb; --ink:#1a1d24; --dim:#5b6270; --line:#e6e8ee; --fb:'Inter',system-ui,sans-serif; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#eef0f4;color:var(--ink);font-family:var(--fb);padding:2rem 1rem}
+  .inv{max-width:800px;margin:0 auto;background:#fff;padding:3rem;border-radius:4px;box-shadow:0 10px 40px -18px rgba(0,0,0,.25)}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--accent);padding-bottom:1.4rem;margin-bottom:1.6rem}
+  .brand{font-size:1.4rem;font-weight:700}
+  .brand small{display:block;color:var(--dim);font-weight:400;font-size:.85rem;margin-top:.2rem}
+  .inv-meta{text-align:right;font-size:.85rem;color:var(--dim)}
+  .inv-meta h2{color:var(--accent);font-size:1.3rem;letter-spacing:.04em;margin-bottom:.3rem}
+  .parties{display:flex;justify-content:space-between;gap:2rem;margin-bottom:1.6rem;font-size:.9rem}
+  .parties h3{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:.4rem}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin-bottom:1.2rem}
+  th{text-align:left;color:var(--dim);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--line);padding:.5rem .4rem}
+  th.num,td.num{text-align:right}
+  td{padding:.6rem .4rem;border-bottom:1px solid var(--line)}
+  .totals{margin-left:auto;width:260px;font-size:.9rem}
+  .totals .row{display:flex;justify-content:space-between;padding:.4rem 0}
+  .totals .grand{border-top:2px solid var(--accent);margin-top:.3rem;padding-top:.6rem;font-weight:700;font-size:1.1rem}
+  .notes{margin-top:1.8rem;color:var(--dim);font-size:.85rem;border-top:1px solid var(--line);padding-top:1rem}
+  @media print{ body{background:#fff;padding:0} .inv{box-shadow:none;max-width:none;border-radius:0;padding:1.4cm} }
+</style>
+</head>
+<body>
+  <article class="inv">
+    <div class="top">
+      <div class="brand">{{Your Business}}<small>{{your@email.com · yoursite.com}}</small></div>
+      <div class="inv-meta"><h2>INVOICE</h2>#{{0001}}<br/>Issued {{Jan 1, 2026}}<br/>Due {{Jan 15, 2026}}</div>
+    </div>
+    <div class="parties">
+      <div><h3>From</h3>{{Your Name}}<br/>{{Address line}}<br/>{{City, ST ZIP}}</div>
+      <div><h3>Bill to</h3>{{Client Name}}<br/>{{Client address}}<br/>{{City, ST ZIP}}</div>
+    </div>
+    <table id="items">
+      <thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Amount</th></tr></thead>
+      <tbody>
+        <tr><td>{{Service / item}}</td><td class="num">1</td><td class="num">0.00</td><td class="num amt">0.00</td></tr>
+        <tr><td>{{Service / item}}</td><td class="num">1</td><td class="num">0.00</td><td class="num amt">0.00</td></tr>
+        <tr><td>{{Service / item}}</td><td class="num">1</td><td class="num">0.00</td><td class="num amt">0.00</td></tr>
+      </tbody>
+    </table>
+    <div class="totals">
+      <div class="row"><span>Subtotal</span><span id="sub">$0.00</span></div>
+      <div class="row"><span>Tax (<span id="taxr">0</span>%)</span><span id="tax">$0.00</span></div>
+      <div class="row grand"><span>Total</span><span id="grand">$0.00</span></div>
+    </div>
+    <p class="notes">{{Payment terms / thank-you note / bank or payment details.}}</p>
+  </article>
+  <script>
+    // Auto-computes line amounts (qty × rate) and totals. Set TAX below.
+    const TAX = 0; // percent
+    let sub = 0;
+    for (const tr of document.querySelectorAll('#items tbody tr')) {
+      const c = tr.children;
+      const qty = parseFloat(c[1].textContent) || 0;
+      const rate = parseFloat(c[2].textContent) || 0;
+      const amt = qty * rate; sub += amt;
+      c[3].textContent = amt.toFixed(2);
+    }
+    const f = n => '$' + n.toFixed(2);
+    document.getElementById('sub').textContent = f(sub);
+    document.getElementById('taxr').textContent = TAX;
+    document.getElementById('tax').textContent = f(sub * TAX / 100);
+    document.getElementById('grand').textContent = f(sub * (1 + TAX/100));
+  </script>
+</body>
+</html>

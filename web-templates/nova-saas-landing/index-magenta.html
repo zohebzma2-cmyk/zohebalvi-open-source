@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ╔═══════════════════════════════════════════════════════╗
+     ║  NOVA — a dark SaaS / product landing page template     ║
+     ║  Edit the --brand vars in :root, replace {{PLACEHOLDERS}},║
+     ║  swap the pricing. No build, no dependencies. MIT-buyer. ║
+     ╚═══════════════════════════════════════════════════════╝ -->
+<title>{{Product}} — {{one-line tagline}}</title>
+<meta name="description" content="{{What your product does, in one sentence, for SEO + social.}}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --brand-1:#e85d9b; --brand-2:#9b7dff; --glow:rgba(232,93,155,.45); --bg:#0a0b10;
+    --bg-2:#12131c; --ink:#f7f8fb; --dim:#a6acbd; --dimmer:#6b7186; --line:rgba(255,255,255,.08);
+    --fd:'Syne',sans-serif; --fb:'Inter',system-ui,sans-serif; --ease:cubic-bezier(.16,1,.3,1); --w:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--w);margin:0 auto;padding:0 1.5rem}
+  nav{position:fixed;inset:0 0 auto 0;z-index:50;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-family:var(--fd);font-weight:800;font-size:1.15rem}.logo span{color:var(--brand-1)}
+  .nlinks{display:flex;gap:1.6rem;font-size:.9rem}.nlinks a{color:var(--dim)}.nlinks a:hover{color:var(--ink)}
+  .btn{display:inline-block;padding:.7rem 1.4rem;border-radius:10px;font-weight:600;transition:.2s var(--ease)}
+  .btn-p{background:linear-gradient(120deg,var(--brand-1),var(--brand-2));color:#06070c}
+  .btn-p:hover{transform:translateY(-2px);box-shadow:0 14px 30px -10px var(--glow)}
+  .btn-g{border:1px solid var(--line);color:var(--ink)}.btn-g:hover{border-color:var(--brand-1)}
+  @media(max-width:640px){.nlinks{display:none}}
+  .hero{padding:9rem 0 5rem;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:70vw;height:70vw;max-width:760px;max-height:760px;background:radial-gradient(circle,var(--glow),transparent 60%);filter:blur(40px);opacity:.55}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.35rem 1rem;font-size:.78rem;color:var(--dim);margin-bottom:1.5rem}
+  .hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;letter-spacing:-.02em;max-width:16ch;margin:0 auto}
+  .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--brand-1),var(--brand-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{color:var(--dim);font-size:clamp(1rem,2vw,1.2rem);max-width:52ch;margin:1.4rem auto 2.2rem}
+  .hero .cta{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+  .mock{margin:3.5rem auto 0;max-width:840px;height:300px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--bg-2),var(--bg));position:relative;overflow:hidden}
+  .mock::after{content:'{{ Product screenshot / demo }}';position:absolute;inset:0;display:grid;place-items:center;color:var(--dimmer);font-size:.85rem}
+  section{padding:5rem 0}
+  .eyebrow{text-align:center;color:var(--brand-1);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+  .h2{font-family:var(--fd);font-weight:700;font-size:clamp(1.8rem,4vw,2.6rem);text-align:center;margin-bottom:2.5rem}
+  .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem}
+  .feat{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:1.6rem}
+  .feat .ic{width:42px;height:42px;border-radius:10px;background:linear-gradient(120deg,var(--brand-1),var(--brand-2));margin-bottom:1rem}
+  .feat h3{font-size:1.1rem;margin-bottom:.4rem}.feat p{color:var(--dim);font-size:.92rem}
+  .prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;max-width:920px;margin:0 auto}
+  .price{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:1.8rem;text-align:center}
+  .price.feat-tier{border-color:var(--brand-1);box-shadow:0 20px 50px -28px var(--glow)}
+  .price h3{font-family:var(--fd);font-size:1.1rem;color:var(--dim)}
+  .price .amt{font-family:var(--fd);font-size:2.6rem;margin:.5rem 0}.price .amt small{font-size:.9rem;color:var(--dimmer)}
+  .price ul{list-style:none;text-align:left;margin:1.2rem 0;color:var(--dim);font-size:.9rem}
+  .price li{padding:.35rem 0;border-bottom:1px solid var(--line)}
+  .cta-band{text-align:center;background:linear-gradient(120deg,rgba(108,140,255,.12),rgba(155,125,255,.12));border:1px solid var(--line);border-radius:24px;padding:3.5rem 1.5rem;margin:2rem 0}
+  footer{border-top:1px solid var(--line);padding:2rem 0;text-align:center;color:var(--dimmer);font-size:.85rem}
+</style>
+</head>
+<body>
+  <nav><div class="wrap">
+    <a href="#" class="logo">{{Product}}<span>.</span></a>
+    <div class="nlinks"><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#cta" class="btn btn-p" style="padding:.5rem 1rem">Start free</a></div>
+  </div></nav>
+
+  <header class="hero"><div class="wrap">
+    <span class="pill">{{New · v1 is live}}</span>
+    <h1>{{The bold promise}} — <em>{{the differentiator}}</em>.</h1>
+    <p>{{One or two sentences on what it does and who it's for. Specific beats clever.}}</p>
+    <div class="cta"><a href="#cta" class="btn btn-p">Start free →</a><a href="#features" class="btn btn-g">See features</a></div>
+    <div class="mock"></div>
+  </div></header>
+
+  <section id="features"><div class="wrap">
+    <p class="eyebrow">Features</p>
+    <h2 class="h2">Everything you need, nothing you don't</h2>
+    <div class="feats">
+      <div class="feat"><div class="ic"></div><h3>{{Feature one}}</h3><p>{{What it does and why it matters, in a line or two.}}</p></div>
+      <div class="feat"><div class="ic"></div><h3>{{Feature two}}</h3><p>{{What it does and why it matters, in a line or two.}}</p></div>
+      <div class="feat"><div class="ic"></div><h3>{{Feature three}}</h3><p>{{What it does and why it matters, in a line or two.}}</p></div>
+    </div>
+  </div></section>
+
+  <section id="pricing"><div class="wrap">
+    <p class="eyebrow">Pricing</p>
+    <h2 class="h2">Simple, honest pricing</h2>
+    <div class="prices">
+      <div class="price"><h3>Starter</h3><div class="amt">$0</div><ul><li>{{feature}}</li><li>{{feature}}</li><li>{{feature}}</li></ul><a href="#cta" class="btn btn-g" style="width:100%">Get started</a></div>
+      <div class="price feat-tier"><h3>Pro</h3><div class="amt">$19<small>/mo</small></div><ul><li>{{everything in Starter}}</li><li>{{feature}}</li><li>{{feature}}</li></ul><a href="#cta" class="btn btn-p" style="width:100%">Start free trial</a></div>
+      <div class="price"><h3>Team</h3><div class="amt">$49<small>/mo</small></div><ul><li>{{everything in Pro}}</li><li>{{feature}}</li><li>{{feature}}</li></ul><a href="#cta" class="btn btn-g" style="width:100%">Contact sales</a></div>
+    </div>
+  </div></section>
+
+  <section id="cta"><div class="wrap"><div class="cta-band">
+    <h2 class="h2" style="margin-bottom:.8rem">{{Ready to start?}}</h2>
+    <p style="color:var(--dim);margin-bottom:1.6rem">{{One last nudge. No credit card required.}}</p>
+    <a href="mailto:{{you@email.com}}" class="btn btn-p">Start free →</a>
+  </div></div></section>
+
+  <footer><div class="wrap">© <span id="y"></span> {{Product}}. Built with the Nova template.</div></footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>

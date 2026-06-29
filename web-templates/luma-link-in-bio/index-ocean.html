@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ╔══════════════════════════════════════════════════════╗
+     ║  LUMA — a link-in-bio / personal links page template    ║
+     ║  Edit the --brand vars, your name/bio, and the LINKS     ║
+     ║  array. One file, no build, no dependencies. MIT-buyer.  ║
+     ╚══════════════════════════════════════════════════════╝ -->
+<title>{{Your Name}} — links</title>
+<meta name="description" content="{{Your one-line bio / what you do.}}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --brand-1:#2dd4bf; --brand-2:#6c8cff; --bg:#0c0c12; --card:#16161f;
+    --ink:#f6f6fb; --dim:#a0a0b4; --line:rgba(255,255,255,.09);
+    --fd:'Space Grotesk',sans-serif; --fb:'Inter',system-ui,sans-serif; --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{min-height:100vh;background:radial-gradient(120% 80% at 50% 0%,color-mix(in srgb,var(--brand-1) 22%,var(--bg)),var(--bg));color:var(--ink);font-family:var(--fb);display:flex;justify-content:center;padding:3rem 1.25rem}
+  .card{width:100%;max-width:480px;text-align:center}
+  .avatar{width:96px;height:96px;border-radius:50%;margin:0 auto 1.1rem;background:linear-gradient(135deg,var(--brand-1),var(--brand-2));display:grid;place-items:center;font-family:var(--fd);font-weight:700;font-size:2rem;color:#0c0c12;box-shadow:0 12px 40px -12px var(--brand-1)}
+  h1{font-family:var(--fd);font-weight:700;font-size:1.5rem;margin-bottom:.35rem}
+  .bio{color:var(--dim);font-size:.95rem;margin-bottom:.4rem}
+  .handle{color:var(--brand-2);font-size:.85rem;margin-bottom:1.8rem}
+  .links{display:flex;flex-direction:column;gap:.85rem}
+  .link{display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem;font-weight:500;color:var(--ink);text-decoration:none;transition:.2s var(--ease)}
+  .link:hover{transform:translateY(-2px);border-color:var(--brand-1);box-shadow:0 12px 30px -16px var(--brand-1)}
+  .link.primary{background:linear-gradient(120deg,var(--brand-1),var(--brand-2));color:#0c0c12;border:none}
+  .socials{display:flex;justify-content:center;gap:1.4rem;margin-top:2rem;color:var(--dim);font-size:.85rem}
+  .socials a{color:var(--dim);text-decoration:none}.socials a:hover{color:var(--ink)}
+  footer{margin-top:2.5rem;color:#5a5a70;font-size:.75rem}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="avatar">{{ZA}}</div>
+    <h1>{{Your Name}}</h1>
+    <p class="bio">{{What you do · one short line}}</p>
+    <p class="handle">@{{yourhandle}}</p>
+    <div class="links" id="links"></div>
+    <div class="socials" id="socials"></div>
+    <footer>Built with the Luma template</footer>
+  </main>
+  <script>
+    // Edit these two arrays — that's the whole site.
+    const LINKS = [
+      { label: '✦ {{Main call to action}}', url: '#', primary: true },
+      { label: '{{Latest project / shop}}', url: '#' },
+      { label: '{{Newsletter / book a call}}', url: '#' },
+      { label: '{{Portfolio / resume}}', url: '#' },
+    ];
+    const SOCIALS = [
+      { label: 'X', url: '#' }, { label: 'LinkedIn', url: '#' },
+      { label: 'Instagram', url: '#' }, { label: 'Email', url: 'mailto:{{you@email.com}}' },
+    ];
+    const mk = (tag, cls) => { const n = document.createElement(tag); if (cls) n.className = cls; return n; };
+    const lw = document.getElementById('links');
+    for (const l of LINKS) { const a = mk('a', 'link' + (l.primary ? ' primary' : '')); a.href = l.url; a.textContent = l.label; lw.appendChild(a); }
+    const sw = document.getElementById('socials');
+    for (const s of SOCIALS) { const a = mk('a'); a.href = s.url; a.textContent = s.label; sw.appendChild(a); }
+  </script>
+</body>
+</html>

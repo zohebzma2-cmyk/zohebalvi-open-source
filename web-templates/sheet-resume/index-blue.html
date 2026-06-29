@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- SHEET — a clean, print-ready one-page resume/CV. Edit the {{text}}, set --accent.
+     Prints to a tidy A4/Letter PDF (Cmd/Ctrl+P → Save as PDF). No dependencies. -->
+<title>{{Your Name}} — Resume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --accent:#2b59ff; --ink:#1a1d24; --dim:#5b6270; --line:#e6e8ee; --bg:#fff; --fb:'Inter',system-ui,sans-serif; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#eef0f4;color:var(--ink);font-family:var(--fb);line-height:1.5;padding:2rem 1rem}
+  .sheet{max-width:820px;margin:0 auto;background:var(--bg);padding:3rem 3.25rem;border-radius:4px;box-shadow:0 10px 40px -18px rgba(0,0,0,.25)}
+  header{border-bottom:2px solid var(--accent);padding-bottom:1.1rem;margin-bottom:1.5rem}
+  header h1{font-size:2.1rem;font-weight:700;letter-spacing:-.01em}
+  header .title{color:var(--accent);font-weight:600;font-size:1.05rem;margin-top:.15rem}
+  header .contact{color:var(--dim);font-size:.85rem;margin-top:.6rem;display:flex;gap:1.2rem;flex-wrap:wrap}
+  header .contact a{color:var(--dim);text-decoration:none}
+  section{margin-bottom:1.4rem}
+  h2{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem}
+  .summary{color:var(--dim);font-size:.95rem}
+  .entry{margin-bottom:1rem}
+  .entry .row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+  .entry .role{font-weight:600}
+  .entry .org{color:var(--accent);font-weight:500}
+  .entry .when{color:var(--dim);font-size:.82rem;white-space:nowrap}
+  .entry ul{margin:.4rem 0 0 1.1rem;color:var(--dim);font-size:.9rem}
+  .entry li{margin-bottom:.15rem}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+  .skills{display:flex;flex-wrap:wrap;gap:.5rem}
+  .skill{background:#f1f3f8;border:1px solid var(--line);border-radius:6px;padding:.3rem .7rem;font-size:.82rem}
+  @media print{ body{background:#fff;padding:0} .sheet{box-shadow:none;max-width:none;padding:1.4cm 1.6cm;border-radius:0} }
+</style>
+</head>
+<body>
+  <article class="sheet">
+    <header>
+      <h1>{{Your Name}}</h1>
+      <div class="title">{{Your Title · e.g. Full-Stack Engineer}}</div>
+      <div class="contact">
+        <a href="mailto:{{you@email.com}}">{{you@email.com}}</a>
+        <span>{{City, ST}}</span>
+        <a href="#">{{yoursite.com}}</a>
+        <a href="#">linkedin.com/in/{{you}}</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p class="summary">{{Two or three sentences: who you are, your strongest skills, and the kind of role you want.}}</p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="entry">
+        <div class="row"><span><span class="role">{{Role}}</span> · <span class="org">{{Company}}</span></span><span class="when">{{2023 – Present}}</span></div>
+        <ul><li>{{Impact bullet — what you did + the measurable result.}}</li><li>{{Another result, with a number if you can.}}</li></ul>
+      </div>
+      <div class="entry">
+        <div class="row"><span><span class="role">{{Role}}</span> · <span class="org">{{Company}}</span></span><span class="when">{{2021 – 2023}}</span></div>
+        <ul><li>{{Impact bullet.}}</li><li>{{Impact bullet.}}</li></ul>
+      </div>
+    </section>
+
+    <div class="grid2">
+      <section>
+        <h2>Skills</h2>
+        <div class="skills"><span class="skill">{{Skill}}</span><span class="skill">{{Skill}}</span><span class="skill">{{Skill}}</span><span class="skill">{{Skill}}</span><span class="skill">{{Skill}}</span></div>
+      </section>
+      <section>
+        <h2>Education</h2>
+        <div class="entry"><div class="row"><span class="role">{{Degree}}</span><span class="when">{{Year}}</span></div><div class="org">{{School}}</div></div>
+      </section>
+    </div>
+  </article>
+</body>
+</html>

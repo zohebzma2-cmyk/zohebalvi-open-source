@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ╔═══════════════════════════════════════════════════════════════╗
+     ║  AURORA — a dark, modern one-page portfolio template            ║
+     ║  Customize: (1) edit the --brand colors in :root below,         ║
+     ║  (2) replace the {{PLACEHOLDER}} content, (3) drop in your work. ║
+     ║  Three ready color themes are in /themes (just swap this file's  ║
+     ║  <style> :root block, or link the theme css). MIT for buyers.    ║
+     ╚═══════════════════════════════════════════════════════════════╝ -->
+<title>{{YOUR NAME}} — {{Your Title}}</title>
+<meta name="description" content="{{One-line description of you / your work for search + social.}}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* ── THEME: change these four to re-skin the whole site ── */
+    --brand-1: #fbbf24;            /* primary accent */
+    --brand-2: #fb7185;            /* secondary accent */
+    --brand-glow: rgba(251,191,36,.4);
+    --bg: #0a0a0f;
+
+    --bg-elevated: #111119; --ink: #fafafa; --ink-dim: #a8a8b8; --ink-dimmer: #6c6c80;
+    --line: rgba(255,255,255,.08); --line-strong: rgba(255,255,255,.16);
+    --font-display: 'Syne', sans-serif; --font-body: 'Inter', system-ui, sans-serif; --font-grotesk: 'Space Grotesk', sans-serif;
+    --ease: cubic-bezier(.16,1,.3,1); --max-w: 1100px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+
+  /* nav */
+  nav { position: fixed; inset: 0 0 auto 0; z-index: 50; backdrop-filter: blur(12px); background: color-mix(in srgb, var(--bg) 80%, transparent); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; }
+  .logo span { color: var(--brand-1); }
+  .nav-links { display: flex; gap: 1.75rem; font-size: .9rem; }
+  .nav-links a { color: var(--ink-dim); transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 640px) { .nav-links { display: none; } }
+
+  /* hero */
+  .hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -30%; left: 50%; transform: translateX(-50%); width: 80vw; height: 80vw; max-width: 900px; max-height: 900px; background: radial-gradient(circle, var(--brand-glow), transparent 60%); filter: blur(40px); opacity: .5; pointer-events: none; }
+  .eyebrow { font-family: var(--font-grotesk); color: var(--brand-1); letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; margin-bottom: 1rem; }
+  .hero h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.02; letter-spacing: -.02em; }
+  .hero h1 em { font-style: normal; background: linear-gradient(120deg, var(--brand-1), var(--brand-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { color: var(--ink-dim); font-size: clamp(1rem, 2.5vw, 1.25rem); max-width: 52ch; margin: 1.5rem 0 2.5rem; }
+  .cta { display: inline-flex; gap: .9rem; flex-wrap: wrap; }
+  .btn { padding: .85rem 1.6rem; border-radius: 999px; font-weight: 600; transition: transform .2s var(--ease), filter .2s; }
+  .btn-primary { background: var(--brand-1); color: #0a0a0f; }
+  .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-ghost { border: 1px solid var(--line-strong); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--brand-1); }
+
+  /* sections */
+  section { padding: 6rem 0; }
+  .sec-head { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; margin-bottom: .5rem; }
+  .sec-sub { color: var(--ink-dimmer); font-family: var(--font-grotesk); margin-bottom: 2.5rem; }
+
+  /* work grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+  .card { background: var(--bg-elevated); border: 1px solid var(--line); border-radius: 18px; padding: 1.5rem; transition: transform .3s var(--ease), border-color .3s; }
+  .card:hover { transform: translateY(-5px); border-color: var(--brand-1); box-shadow: 0 20px 40px -24px var(--brand-glow); }
+  .card .tag { font-size: .72rem; font-family: var(--font-grotesk); color: var(--brand-1); text-transform: uppercase; letter-spacing: .06em; }
+  .card h3 { font-family: var(--font-grotesk); font-size: 1.2rem; margin: .5rem 0; }
+  .card p { color: var(--ink-dim); font-size: .92rem; }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; } }
+  .about p { color: var(--ink-dim); margin-bottom: 1rem; }
+  .stats { display: grid; gap: 1rem; }
+  .stat { border-left: 2px solid var(--brand-1); padding-left: 1rem; }
+  .stat b { font-family: var(--font-display); font-size: 1.8rem; display: block; }
+  .stat span { color: var(--ink-dimmer); font-size: .85rem; }
+
+  /* contact / footer */
+  .contact { text-align: center; }
+  .contact .btn-primary { margin-top: 1.5rem; }
+  footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--ink-dimmer); font-size: .85rem; text-align: center; }
+</style>
+</head>
+<body>
+  <nav><div class="wrap">
+    <a href="#" class="logo">{{YN}}<span>.</span></a>
+    <div class="nav-links">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </div>
+  </div></nav>
+
+  <header class="hero"><div class="wrap">
+    <p class="eyebrow">{{What you do · e.g. Product Designer}}</p>
+    <h1>Hi, I'm {{Name}} —<br>I build <em>{{things you build}}</em>.</h1>
+    <p>{{Two sentences about who you are and the value you bring. Keep it punchy and specific.}}</p>
+    <div class="cta">
+      <a href="#work" class="btn btn-primary">See my work →</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div></header>
+
+  <section id="work"><div class="wrap">
+    <h2 class="sec-head">Selected work</h2>
+    <p class="sec-sub">A few things I'm proud of</p>
+    <div class="grid">
+      <!-- duplicate a .card per project -->
+      <article class="card"><span class="tag">{{Category}}</span><h3>{{Project name}}</h3><p>{{One-line outcome — what you made and the result.}}</p></article>
+      <article class="card"><span class="tag">{{Category}}</span><h3>{{Project name}}</h3><p>{{One-line outcome — what you made and the result.}}</p></article>
+      <article class="card"><span class="tag">{{Category}}</span><h3>{{Project name}}</h3><p>{{One-line outcome — what you made and the result.}}</p></article>
+    </div>
+  </div></section>
+
+  <section id="about"><div class="wrap about">
+    <div>
+      <h2 class="sec-head">About</h2>
+      <p>{{A short paragraph about your background, what drives you, and what you're looking for.}}</p>
+      <p>{{A second paragraph — skills, tools, or a personal note.}}</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>{{8+}}</b><span>{{years experience}}</span></div>
+      <div class="stat"><b>{{40}}</b><span>{{projects shipped}}</span></div>
+      <div class="stat"><b>{{∞}}</b><span>{{cups of coffee}}</span></div>
+    </div>
+  </div></section>
+
+  <section id="contact"><div class="wrap contact">
+    <h2 class="sec-head">Let's work together</h2>
+    <p class="sec-sub">{{Open to opportunities · your city or "remote"}}</p>
+    <a href="mailto:{{you@email.com}}" class="btn btn-primary">{{you@email.com}}</a>
+  </div></section>
+
+  <footer><div class="wrap">© <span id="y"></span> {{Your Name}}. Built with the Aurora template.</div></footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
