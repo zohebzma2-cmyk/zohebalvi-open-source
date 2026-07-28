@@ -13,7 +13,7 @@
 // =====================================================================
 
 /* [Part select] */
-part = "body";       // body | cap | plate | label
+part = "body";       // body | cap | plate | label | rack
 fw   = 38;           // footprint width
 fd   = 63;           // footprint depth
 h    = 127;          // overall height including the cap
@@ -46,6 +46,20 @@ lab_frac = 0.46;     // plate height as a fraction of body height
 lab_deep = 1.4;      // recess depth
 lab_t    = 1.0;      // plate thickness (prints this + 0.6 mm of text)
 lab_cl   = 0.15;    // light interference: the plate friction-fits into the panel
+
+/* [Drawer rack] */
+// A toast-rack of leaning fins. Each capsule drops into a slot and tips back
+// against the next fin, so a drawerful reads like a card index from above.
+// Fins lean by rack_ang from vertical; keep that under 45 deg and every face
+// stays self-supporting, so the rack prints flat on its base with no supports.
+rack_ang  = 20;      // lean from vertical, degrees
+rack_fin  = 2.2;     // fin thickness
+rack_base = 3.0;     // base plate thickness
+rack_cl   = 1.2;     // slot clearance on the capsule's across-slot dimension
+rack_wall = 2.4;     // end walls
+rack_fh   = 16;      // how far a divider stands above the ramp
+rack_lip  = 9;       // retaining lip at the low end
+slots     = 3;       // slots per tile
 
 /* [Baseplate] */
 plate_h  = 5.0;
@@ -153,9 +167,54 @@ module plate(w, d, nx, ny) {
     }
 }
 
+// --------------------------------------------------------- drawer rack
+
+// An inclined tray: the floor ramps up at rack_ang, vertical dividers run UP
+// the slope, and a lip at the low end stops anything sliding out. Capsules lie
+// back in the slots so their spine labels face up and out, the way a card index
+// reads. The lean runs along the dividers, not across them, so slot pitch only
+// has to clear the capsule's width.
+//
+// Every face is a ramp, a vertical wall or a 45 deg chamfer - prints flat on
+// the base with no supports.
+function rack_pitch(cw) = cw + rack_cl + rack_fin;
+function rack_len(cw, n) = n * rack_pitch(cw) + rack_fin;
+// A capsule sits square on the incline, so it leans rack_ang from vertical and
+// the slope only has to be as long as its footprint - not its height.
+function rack_run(cd, h) = cd + 2 * rack_wall;
+
+module rack(cw, cd, n, h = 101) {
+    L = rack_len(cw, n);
+    R = rack_run(cd, h);
+    rise = R * tan(rack_ang);
+    difference() {
+        union() {
+            // ramp: a wedge rising toward the back
+            hull() {
+                translate([0, -R / 2 + 1, 0]) cube([L, 2, rack_base], center = true);
+                translate([0, R / 2 - 1, rise / 2]) cube([L, 2, rack_base + rise], center = true);
+            }
+            // dividers, vertical, running up the slope
+            for (i = [0:n])
+                translate([-L / 2 + rack_fin / 2 + i * rack_pitch(cw), 0, 0])
+                    hull() {
+                        translate([0, -R / 2 + 1, 0])
+                            cube([rack_fin, 2, rack_base + rack_fh * 0.45], center = true);
+                        translate([0, R / 2 - 1, rise / 2])
+                            cube([rack_fin, 2, rack_base + rise + rack_fh], center = true);
+                    }
+            // retaining lip at the low end
+            translate([0, -R / 2 + rack_wall / 2, rack_base / 2 + rack_lip / 2])
+                cube([L, rack_wall, rack_base + rack_lip], center = true);
+        }
+        translate([0, 0, -50]) cube([L * 4, R * 4, 100], center = true);
+    }
+}
+
 // -------------------------------------------------------------- render
 
 if (part == "body")       body(fw, fd, h);
 else if (part == "cap")   cap(fw, fd, h);
 else if (part == "plate") plate(fw, fd, nx, 1);
-else if (part == "label") label(h, "USB-C");
+else if (part == "label") label(h, label_text == "" ? "USB-C" : label_text);
+else if (part == "rack")  rack(fw, fd, slots, h);

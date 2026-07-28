@@ -20,3 +20,15 @@ else if (test == "label_in_panel")
   }
 else if (test == "body_in_plate")
   intersection() { plate(38,63,3,1); translate(nudge+[0,0,5-3]) body(38,63,127); }
+
+rack_ang = 20; rack_base = 3.0; rack_cl = 1.2; rack_fin = 2.2;
+if (test == "capsule_in_rack")
+  intersection() {
+    rack(38, 63, 3, 101);
+    let (R = rack_run(63, 101), yc = 3.5)
+      translate(nudge + [0, yc, rack_base + (yc + R/2)*tan(rack_ang) + 0.3])
+        rotate([rack_ang, 0, 0]) body(38, 63, 101);
+  }
+
+else if (test == "capsule_in_dock")
+  intersection() { plate(38,63,3,1); translate(nudge+[0,0,2]) body(38,63,101); }
