@@ -1,0 +1,577 @@
+{
+ "project": "CoilCap",
+ "parts": [
+  {
+   "file": "coilcap_baseplate_1x3_25x75.stl",
+   "kind": "baseplate",
+   "size_mm": [
+    29.0,
+    79.0,
+    5.0
+   ],
+   "triangles": 1524,
+   "bytes": 76284
+  },
+  {
+   "file": "coilcap_baseplate_2x3_50x75.stl",
+   "kind": "baseplate",
+   "size_mm": [
+    54.0,
+    79.0,
+    5.0
+   ],
+   "triangles": 2596,
+   "bytes": 129884
+  },
+  {
+   "file": "coilcap_baseplate_3x3_75x75.stl",
+   "kind": "baseplate",
+   "size_mm": [
+    79.0,
+    79.0,
+    5.0
+   ],
+   "triangles": 3916,
+   "bytes": 195884
+  },
+  {
+   "file": "coilcap_baseplate_4x3_100x75.stl",
+   "kind": "baseplate",
+   "size_mm": [
+    104.0,
+    79.0,
+    5.0
+   ],
+   "triangles": 4988,
+   "bytes": 249484
+  },
+  {
+   "file": "coilcap_baseplate_5x3_125x75.stl",
+   "kind": "baseplate",
+   "size_mm": [
+    129.0,
+    79.0,
+    5.0
+   ],
+   "triangles": 6308,
+   "bytes": 315484
+  },
+  {
+   "file": "coilcap_box_L_100x75x25.stl",
+   "kind": "box",
+   "size_mm": [
+    100.0,
+    75.0,
+    25.0
+   ],
+   "triangles": 4120,
+   "bytes": 206084
+  },
+  {
+   "file": "coilcap_box_L_100x75x40.stl",
+   "kind": "box",
+   "size_mm": [
+    100.0,
+    75.0,
+    40.0
+   ],
+   "triangles": 4120,
+   "bytes": 206084
+  },
+  {
+   "file": "coilcap_box_L_100x75x55.stl",
+   "kind": "box",
+   "size_mm": [
+    100.0,
+    75.0,
+    55.0
+   ],
+   "triangles": 4120,
+   "bytes": 206084
+  },
+  {
+   "file": "coilcap_box_M_50x75x25.stl",
+   "kind": "box",
+   "size_mm": [
+    50.0,
+    75.0,
+    25.0
+   ],
+   "triangles": 2288,
+   "bytes": 114484
+  },
+  {
+   "file": "coilcap_box_M_50x75x40.stl",
+   "kind": "box",
+   "size_mm": [
+    50.0,
+    75.0,
+    40.0
+   ],
+   "triangles": 2288,
+   "bytes": 114484
+  },
+  {
+   "file": "coilcap_box_M_50x75x55.stl",
+   "kind": "box",
+   "size_mm": [
+    50.0,
+    75.0,
+    55.0
+   ],
+   "triangles": 2288,
+   "bytes": 114484
+  },
+  {
+   "file": "coilcap_box_S_25x75x25.stl",
+   "kind": "box",
+   "size_mm": [
+    25.0,
+    75.0,
+    25.0
+   ],
+   "triangles": 1372,
+   "bytes": 68684
+  },
+  {
+   "file": "coilcap_box_S_25x75x40.stl",
+   "kind": "box",
+   "size_mm": [
+    25.0,
+    75.0,
+    40.0
+   ],
+   "triangles": 1372,
+   "bytes": 68684
+  },
+  {
+   "file": "coilcap_box_S_25x75x55.stl",
+   "kind": "box",
+   "size_mm": [
+    25.0,
+    75.0,
+    55.0
+   ],
+   "triangles": 1372,
+   "bytes": 68684
+  },
+  {
+   "file": "coilcap_box_W_75x75x25.stl",
+   "kind": "box",
+   "size_mm": [
+    75.0,
+    75.0,
+    25.0
+   ],
+   "triangles": 3204,
+   "bytes": 160284
+  },
+  {
+   "file": "coilcap_box_W_75x75x40.stl",
+   "kind": "box",
+   "size_mm": [
+    75.0,
+    75.0,
+    40.0
+   ],
+   "triangles": 3204,
+   "bytes": 160284
+  },
+  {
+   "file": "coilcap_box_W_75x75x55.stl",
+   "kind": "box",
+   "size_mm": [
+    75.0,
+    75.0,
+    55.0
+   ],
+   "triangles": 3204,
+   "bytes": 160284
+  },
+  {
+   "file": "coilcap_box_XL_125x75x25.stl",
+   "kind": "box",
+   "size_mm": [
+    125.0,
+    75.0,
+    25.0
+   ],
+   "triangles": 5036,
+   "bytes": 251884
+  },
+  {
+   "file": "coilcap_box_XL_125x75x40.stl",
+   "kind": "box",
+   "size_mm": [
+    125.0,
+    75.0,
+    40.0
+   ],
+   "triangles": 5036,
+   "bytes": 251884
+  },
+  {
+   "file": "coilcap_box_XL_125x75x55.stl",
+   "kind": "box",
+   "size_mm": [
+    125.0,
+    75.0,
+    55.0
+   ],
+   "triangles": 5036,
+   "bytes": 251884
+  },
+  {
+   "file": "coilcap_label_M_adapters.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3856,
+   "bytes": 192884
+  },
+  {
+   "file": "coilcap_label_M_audio.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1676,
+   "bytes": 83884
+  },
+  {
+   "file": "coilcap_label_M_blank.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.0
+   ],
+   "triangles": 204,
+   "bytes": 10284
+  },
+  {
+   "file": "coilcap_label_M_chargers.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 4272,
+   "bytes": 213684
+  },
+  {
+   "file": "coilcap_label_M_ethernet.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 2420,
+   "bytes": 121084
+  },
+  {
+   "file": "coilcap_label_M_hdmi.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 808,
+   "bytes": 40484
+  },
+  {
+   "file": "coilcap_label_M_lightning.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3152,
+   "bytes": 157684
+  },
+  {
+   "file": "coilcap_label_M_micro-usb.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3232,
+   "bytes": 161684
+  },
+  {
+   "file": "coilcap_label_M_power.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1628,
+   "bytes": 81484
+  },
+  {
+   "file": "coilcap_label_M_usb-a.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1964,
+   "bytes": 98284
+  },
+  {
+   "file": "coilcap_label_M_usb-c.stl",
+   "kind": "label",
+   "size_mm": [
+    41.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 2312,
+   "bytes": 115684
+  },
+  {
+   "file": "coilcap_label_S_audio.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1672,
+   "bytes": 83684
+  },
+  {
+   "file": "coilcap_label_S_blank.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.0
+   ],
+   "triangles": 204,
+   "bytes": 10284
+  },
+  {
+   "file": "coilcap_label_S_hdmi.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 808,
+   "bytes": 40484
+  },
+  {
+   "file": "coilcap_label_S_power.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1628,
+   "bytes": 81484
+  },
+  {
+   "file": "coilcap_label_S_usb-a.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1956,
+   "bytes": 97884
+  },
+  {
+   "file": "coilcap_label_S_usb-c.stl",
+   "kind": "label",
+   "size_mm": [
+    16.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 2300,
+   "bytes": 115084
+  },
+  {
+   "file": "coilcap_label_WLXL_adapters.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3856,
+   "bytes": 192884
+  },
+  {
+   "file": "coilcap_label_WLXL_audio.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1676,
+   "bytes": 83884
+  },
+  {
+   "file": "coilcap_label_WLXL_blank.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.0
+   ],
+   "triangles": 204,
+   "bytes": 10284
+  },
+  {
+   "file": "coilcap_label_WLXL_chargers.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 4272,
+   "bytes": 213684
+  },
+  {
+   "file": "coilcap_label_WLXL_ethernet.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 2420,
+   "bytes": 121084
+  },
+  {
+   "file": "coilcap_label_WLXL_hdmi.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 808,
+   "bytes": 40484
+  },
+  {
+   "file": "coilcap_label_WLXL_lightning.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3152,
+   "bytes": 157684
+  },
+  {
+   "file": "coilcap_label_WLXL_micro-usb.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 3232,
+   "bytes": 161684
+  },
+  {
+   "file": "coilcap_label_WLXL_power.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1628,
+   "bytes": 81484
+  },
+  {
+   "file": "coilcap_label_WLXL_usb-a.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 1964,
+   "bytes": 98284
+  },
+  {
+   "file": "coilcap_label_WLXL_usb-c.stl",
+   "kind": "label",
+   "size_mm": [
+    59.4,
+    17.6,
+    1.6
+   ],
+   "triangles": 2312,
+   "bytes": 115684
+  },
+  {
+   "file": "coilcap_tray_3x3.stl",
+   "kind": "tray",
+   "size_mm": [
+    80.4,
+    80.4,
+    17.0
+   ],
+   "triangles": 4012,
+   "bytes": 200684
+  },
+  {
+   "file": "coilcap_tray_5x3.stl",
+   "kind": "tray",
+   "size_mm": [
+    130.4,
+    80.4,
+    17.0
+   ],
+   "triangles": 6388,
+   "bytes": 319484
+  },
+  {
+   "file": "coilcap_wallplate_3x3.stl",
+   "kind": "wallplate",
+   "size_mm": [
+    75.0,
+    103.0,
+    5.0
+   ],
+   "triangles": 6548,
+   "bytes": 327484
+  },
+  {
+   "file": "coilcap_wallplate_5x3.stl",
+   "kind": "wallplate",
+   "size_mm": [
+    125.0,
+    103.0,
+    5.0
+   ],
+   "triangles": 8940,
+   "bytes": 447084
+  }
+ ]
+}

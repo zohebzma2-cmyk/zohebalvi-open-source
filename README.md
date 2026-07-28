@@ -10,6 +10,7 @@ Parametric where noted; print flat, no supports. Designed on a FlashForge Advent
 
 | Design | What's inside |
 |---|---|
+| `coilcap-cable-system` | **52-part modular cable storage system** (MIT). 5 box widths × 3 heights, slide-in printed labels, dovetailed baseplates, wall mounts, drawer trays — all from one parametric source, plus the build and assembly-test harness that verifies them |
 | `socket-system-complete` | The full kit — dovetail wall rails (1/4, 3/8, 1/2", metric + SAE), labeled hex-bit holder, DeWalt ToughSystem Gridfinity drawer set + baseplate, fit-test coupons |
 | `dovetail-socket-rails` | Six interlocking socket rails, friction-post grip, embossed sizes, keyhole wall mounts |
 | `gridfinity-drawer-set` | Gridfinity baseplate + socket bins sized to the DeWalt ToughSystem 2.0 drawer (42 mm spec) |
