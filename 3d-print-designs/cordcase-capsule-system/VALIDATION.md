@@ -4,6 +4,27 @@ Everything in this project is verified geometrically. Nothing has been printed.
 This one plate exercises **every fit in the system** using the smallest parts, so
 you find out in about two hours instead of after a full set.
 
+## Ready-made project files
+
+Two plates, already positioned, with the printer, process and a PETG profile
+baked in. Open either and press Slice.
+
+| File | Contents | Bed used |
+|---|---|---|
+| `CordCase-PETG-plate1.3mf` | 2 rack tiles + 4 cord clamps | 70 % |
+| `CordCase-PETG-plate2.3mf` | body, cap, label, Gridfinity adapter | 26 % |
+
+Two plates rather than one because all seven parts came to 208 cm2 of a 225 cm2
+bed - too tight for the slicer to arrange with skirt clearance.
+
+**Do not open the STLs by selecting them all in Finder.** macOS hands them to
+OrcaSlicer as one multi-file open and it merges them into a single object named
+after the first file - it will report the body as 128 x 42.8 x 95 mm. Use the
+3MFs, or import STLs one at a time.
+
+The mesh positions are baked into these files rather than left to auto-arrange,
+which was placing objects off the bed on this machine.
+
 ## The plate
 
 | Part | What it proves |
@@ -13,7 +34,7 @@ you find out in about two hours instead of after a full set.
 | `cordcase_label_short_usb-c` | label interference fit — `lab_cl` 0.15 mm |
 | `cordcase_rack_S_4slot` ×2 | capsule lean, and the tile dovetail — `dt_cl` 0.35 mm |
 | `cordcase_gfadapter_S_1x1` | Gridfinity foot against your real baseplates |
-| `cordclip` | print-in-place clip — arms must thread their slots and ratchet |
+| `cordclamp` ×4 | double-ended snap clip — jaw must spring open and retain |
 
 Seven parts, about 208 cm² of a 225 cm² bed. One plate.
 
@@ -80,14 +101,14 @@ the dividers.
 - Binds → raise `rack_cl` by 0.4
 - Rattles badly → lower `rack_cl` by 0.4
 
-**5. Cable clip.** Coil a cable, thread each arm back through its slot and pull.
-The teeth should click and hold; the arms should flex without whitening or
-snapping at the root.
+**5. Cord clamp.** Push a cable into a jaw. It should spring open, take the
+cable, and close behind it so the cable will not fall back out.
 
-- Arm won't thread → raise `slot_cl` in `cableclip.scad` by 0.1
-- Ratchet slips under load → raise `tooth` by 0.2
-- Arm cracks at the root when flexed → raise `strap_t` by 0.2, or print it in PETG;
-  PLA is stiff and this is the one part in the system that has to bend
+- Won't take the cable → raise `mouth` in `cableclip.scad` from 0.72 toward 0.8
+- Cable falls out → lower `mouth` toward 0.65
+- Jaw cracks instead of springing → raise `jaw_wall`, or print in PETG; this is
+  the one part in the system that has to flex, and PLA is brittle in that duty
+- Sized for a 6 mm cable by default; change `cable_d` for thicker runs
 
 **6. Gridfinity adapter into your baseplate.** This is the one I could only
 verify against the spec-exact plate in your own library, not real hardware.
