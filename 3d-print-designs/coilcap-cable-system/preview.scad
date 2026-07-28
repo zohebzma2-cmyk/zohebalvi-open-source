@@ -36,6 +36,13 @@ else if (scene == "label") {
         rotate([90, 0, 0]) label(2, "USB-C");
 }
 
+else if (scene == "angled") {
+    // a straight bin beside an angled one, both seated on a 4-wide plate
+    plate(4, 3);
+    translate([-pitch, 0, drop]) box(2, 3, 40);
+    translate([pitch, 0, drop]) box(2, 3, 40, true);
+}
+
 else if (scene == "plates") {
     plate(2, 3);
     translate([2 * pitch, 0, 0]) plate(2, 3);

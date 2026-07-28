@@ -20,8 +20,11 @@ lab_h = 18;
 lab_pocket = 2.0;
 socket_floor = foot_drop();
 
-module label_in_box(u, hh, txt)
-    translate(nudge + [0, -3 * pitch / 2 + lab_pocket, hh - lab_h + (lab_h - 0.4) / 2])
+// ptop is the top of the front wall: hh on a straight box, lower on an angled
+// one, so the card sits in whichever pocket the variant actually has.
+module label_in_box(u, hh, txt, ang = false)
+    translate(nudge + [0, -3 * pitch / 2 + lab_pocket,
+                       front_height(hh, ang) - lab_h + (lab_h - 0.4) / 2])
         rotate([90, 0, 0]) label(u, txt);
 
 if (test == "box_in_plate")
@@ -58,6 +61,24 @@ else if (test == "label_in_pocket_small")
     intersection() {
         box(1, 3, 25);
         label_in_box(1, 25, "USB-C");
+    }
+
+else if (test == "label_in_angled")
+    intersection() {
+        box(2, 3, 40, true);
+        label_in_box(2, 40, "Lightning", true);
+    }
+
+else if (test == "angled_in_plate")
+    intersection() {
+        plate(2, 3);
+        translate(nudge + [0, 0, socket_floor]) box(2, 3, 40, true);
+    }
+
+else if (test == "box_on_angled_base")
+    intersection() {
+        box(2, 3, 25);
+        translate(nudge + [0, 0, 25]) box(2, 3, 40, true);
     }
 
 else if (test == "plate_to_plate_x")

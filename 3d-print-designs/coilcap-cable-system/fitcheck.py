@@ -32,6 +32,9 @@ TESTS = [
     ("box_on_box_wide",       "tall box on a short 4-wide box",   [0, 0, -0.4]),
     ("label_in_pocket",       "label card in a medium box",       [0, -0.4, 0]),
     ("label_in_pocket_small", "label card in a small box",        [0, -0.4, 0]),
+    ("label_in_angled",       "label card in an angled bin",      [0, -0.4, 0]),
+    ("angled_in_plate",       "angled bin seated in a baseplate", [0, 0, -0.4]),
+    ("box_on_angled_base",    "angled bin stacked on a short box",[0, 0, -0.4]),
     ("plate_to_plate_x",      "baseplates joined side by side",   [-0.5, 0, 0]),
     ("plate_to_plate_y",      "baseplates joined front to back",  [0, -0.5, 0]),
 ]

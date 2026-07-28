@@ -11,7 +11,7 @@
 // =====================================================================
 
 /* [Part select] */
-part = "box";        // box | label | plate | wallplate | tray
+part = "box";        // box | angled | label | plate | wallplate | tray
 ux   = 2;            // width in grid units (1..5)
 uy   = 3;            // depth in grid units (3 = 75 mm, the standard)
 h    = 40;           // box height: 25 short, 40 standard, 55 tall
@@ -32,6 +32,13 @@ foot_ramp  = 1.0;    // 45 deg ramp out to full width
 mouth_ch   = 0.8;    // outward chamfer at the top of the wall
 
 // stacking engagement = (wall - mouth_ch) - foot_inset = 1.0 mm
+
+/* [Angled bin] */
+// The angled variant cuts the front down and slopes the opening back up to
+// full height, so you can see and grab a coiled cable without lifting the box
+// above it out first. The cut is an upward-facing plane - nothing overhangs.
+ang_front = 0.5;     // front wall height as a fraction of total height
+ang_min   = 3;       // ...but never lower than the label pocket plus this
 
 /* [Label pocket] */
 // Pocket sunk into the thick front wall, open at the front and at the top.
@@ -90,13 +97,25 @@ module feet(nx, ny) {
 
 function label_width(W) = min(W - 2 * lab_margin, 60);
 
-module box(nx, ny, hh) {
+// Everything above the plane running from the front edge at `fh` back up to
+// the rear rim at `hh`. Subtracting it leaves an upward-facing slope, which
+// needs no support material.
+module angle_cut(W, D, hh, fh) {
+    a = atan((hh - fh) / D);
+    translate([0, -D / 2, fh]) rotate([a, 0, 0])
+        translate([-W, 0, 0]) cube([2 * W, 2 * D, hh + 10]);
+}
+
+function front_height(hh, ang) = ang ? max(lab_h + ang_min, hh * ang_front) : hh;
+
+module box(nx, ny, hh, ang = false) {
     W = nx * pitch;
     D = ny * pitch;
     cav_d = D - wall - front_wall;          // cavity is pushed back off the front wall
     cav_y = (front_wall - wall) / 2;
     cav_z = foot_h + floor_th;              // floor sits on top of the feet, not through them
     lw = label_width(W);
+    ptop = front_height(hh, ang);           // top of the front wall = top of the label pocket
     union() {
         difference() {
             union() {
@@ -112,12 +131,13 @@ module box(nx, ny, hh) {
                        corner_r - wall + mouth_ch, 0.01);
             }
             // label pocket: sunk into the front wall, open at the front and top
-            translate([-lw / 2, -D / 2 - 0.1, hh - lab_h])
+            translate([-lw / 2, -D / 2 - 0.1, ptop - lab_h])
                 cube([lw, lab_pocket + 0.1, lab_h + 1]);
+            if (ang) angle_cut(W, D, hh, ptop);
         }
         // retaining lips down each side of the pocket
         for (x = [-lw / 2, lw / 2 - lab_lip_w])
-            translate([x, -D / 2, hh - lab_h]) cube([lab_lip_w, lab_lip_t, lab_h]);
+            translate([x, -D / 2, ptop - lab_h]) cube([lab_lip_w, lab_lip_t, lab_h]);
     }
 }
 
@@ -225,6 +245,7 @@ module tray(nx, ny) {
 // ---------------------------------------------------------------- render
 
 if (part == "box")            box(ux, uy, h);
+else if (part == "angled")     box(ux, uy, h, true);
 else if (part == "label")     label(ux, label_text);
 else if (part == "plate")     plate(ux, uy);
 else if (part == "wallplate") wallplate(ux, uy);

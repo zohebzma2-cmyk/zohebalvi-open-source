@@ -41,6 +41,8 @@ def jobs(groups):
             for h, hname in HEIGHTS:
                 out.append((f"box_{code}_{u*25}x75x{h}",
                             {"part": "box", "ux": u, "uy": 3, "h": h}))
+                out.append((f"angled_{code}_{u*25}x75x{h}",
+                            {"part": "angled", "ux": u, "uy": 3, "h": h}))
     if "labels" in groups:
         for u, code, texts in LABEL_SIZES:
             for txt in texts:
