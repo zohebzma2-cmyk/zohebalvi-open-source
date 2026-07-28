@@ -4,6 +4,24 @@ Everything in this project is verified geometrically. Nothing has been printed.
 This one plate exercises **every fit in the system** using the smallest parts, so
 you find out in about two hours instead of after a full set.
 
+## Starter plate — one of everything
+
+`CordCase-PETG-STARTER.3mf` is the one to print first: a complete Small system
+plus all three useful jaw sizes, on a single plate.
+
+| | Part | Proves |
+|---|---|---|
+| 1 | Drawer rack, 4 slots | capsule lean, tile dovetail |
+| 2 | Stand (dock), 4 sockets | capsule stands upright |
+| 3 | Box (body, short) | the mouth and the label panel |
+| 4 | Lid (cap) | the 0.35 mm friction fit |
+| 5 | Jaw, 6 mm | the snap fit at the design size |
+| 6 | Jaw, 4 mm | the smallest jaw, thinnest section |
+| 7 | Jaw, 8 mm | the largest jaw that still fits beside the rest |
+
+Seven objects, no overlaps, everything sitting at z=0 inside the bed. The lid is
+already flipped crown-down so nothing overhangs.
+
 ## Ready-made project files
 
 Two plates, already positioned, with the printer, process and a PETG profile
@@ -37,6 +55,14 @@ which was placing objects off the bed on this machine.
 | `cordclamp` ×4 | double-ended snap clip — jaw must spring open and retain |
 
 Seven parts, about 208 cm² of a 225 cm² bed. One plate.
+
+## A note on the cap's orientation
+
+The cap is modelled with its plug-in skirt hanging below the shoulder. Printed
+that way up the shoulder is an unsupported ledge, so in the supplied plate the
+cap is **flipped crown-down**. That puts the crown's 45 deg taper on the bed and
+makes the shoulder step inward as it rises, so nothing overhangs. If you ever
+import the cap STL yourself, rotate it 180 deg about X before slicing.
 
 ## Settings — PETG on an Adventurer 3C
 
@@ -109,6 +135,14 @@ cable, and close behind it so the cable will not fall back out.
 - Jaw cracks instead of springing → raise `jaw_wall`, or print in PETG; this is
   the one part in the system that has to flex, and PLA is brittle in that duty
 - Sized for a 6 mm cable by default; change `cable_d` for thicker runs
+
+`mouth` is the FINAL opening as a fraction of the cable, lips included — 0.72
+means the gap really is 72 % of `cable_d`. Analysis before printing: each jaw
+tip deflects 0.84 mm to admit a 6 mm cable, about 0.66 % surface strain against
+PETG's ~4-5 % yield, so it should spring rather than crack. The part prints flat,
+so the jaw flexes within a layer instead of across layer bonds — that is the
+whole reason for the orientation. In PLA the same geometry is far more likely to
+snap; this is the part that most wants PETG.
 
 **6. Gridfinity adapter into your baseplate.** This is the one I could only
 verify against the spec-exact plate in your own library, not real hardware.

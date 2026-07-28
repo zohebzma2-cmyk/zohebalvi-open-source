@@ -206,6 +206,8 @@ function rack_len(cw, n) = n * rack_pitch(cw) + rack_fin;
 // A capsule sits square on the incline, so it leans rack_ang from vertical and
 // the slope only has to be as long as its footprint - not its height.
 function rack_run(cd, h) = cd + 2 * rack_wall;
+// Tall enough to catch the capsule well above its centre of mass.
+function back_wall_h(h, rise) = max(rack_base + rise + rack_fh, h * 0.42);
 
 module rack(cw, cd, n, h = 101) {
     L = rack_len(cw, n);
@@ -236,10 +238,12 @@ module rack(cw, cd, n, h = 101) {
                             cube([t, 2, rack_base + rise + rack_fh], center = true);
                     }
             }
-            // back wall at the high end: stops a capsule being pushed out the
-            // back, and ties every divider together so the tile is rigid
-            translate([0, R / 2 - rack_wall / 2, (rack_base + rise + rack_fh) / 2])
-                cube([L, rack_wall, rack_base + rise + rack_fh], center = true);
+            // Back wall doubles as a backrest. A tall narrow capsule leaning
+            // 20 deg has its centre of mass close to its rear edge - the Small
+            // has only 1.7 mm of tip-over margin - so the wall has to positively
+            // support it, not just stop it sliding out. Scaled to the capsule.
+            translate([0, R / 2 - rack_wall / 2, back_wall_h(h, rise) / 2])
+                cube([L, rack_wall, back_wall_h(h, rise)], center = true);
             // retaining lip at the low end
             translate([0, -R / 2 + rack_wall / 2, rack_base / 2 + rack_lip / 2])
                 cube([L, rack_wall, rack_base + rack_lip], center = true);

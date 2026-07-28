@@ -1,65 +1,66 @@
 // =====================================================================
-// CordClamp - two-hook cable clip
+// CordClamp - double J-hook cable clip
 //
-// A big open hook at one end and a smaller opposed hook at the other, joined
-// by a flat frame with lightening windows. Loop a cable, drop the bundle into
-// the big jaw and the tail into the small one; because the jaws face opposite
-// ways the loop is trapped rather than able to roll out.
+// A large open hook at one end and a smaller opposed hook at the other, their
+// centres offset so the part reads as an S, joined by a flat bar with two
+// windows. You HOOK a cable over a jaw rather than snapping it through a narrow
+// mouth: the crook takes the cable and the returned tip stops it lifting out.
 //
-// Extruded flat: every face vertical, no supports, and the layers stack through
-// the thickness so each jaw flexes WITHIN a layer rather than across layer
-// bonds - the strong direction for a part whose job is to spring.
+// Extruded flat - every face vertical, no supports, and the layers stack
+// through the thickness so a hook flexes within a layer, not across bonds.
 // =====================================================================
 
-cable_d   = 6.0;     // cable the big jaw is sized for
-small_f   = 0.60;    // small jaw as a fraction of the big one
-jaw_wall  = 2.2;     // jaw wall thickness
-mouth     = 0.72;    // FINAL opening as a fraction of the jaw's cable, lips included
-lip       = 0.7;     // retaining lip radius at each mouth tip
-depth     = 8.0;     // extrusion - how wide the clip is
-frame_rail = 2.4;    // frame rail thickness - slim, so the jaws stand proud
-window    = 0.40;    // window length as a fraction of span - must not reach the bores
-$fn = 72;
+cable_d   = 6.0;     // cable the big hook is sized for
+small_f   = 0.62;    // small hook as a fraction of the big one
+hook_wall = 2.4;     // hook wall thickness
+open_ang  = 105;     // sector removed to form the mouth, degrees
+tip_r     = 1.1;     // rounded tip of the crook
+depth     = 8.0;     // extrusion
+bar_w     = 5.0;     // connecting bar width
+$fn = 96;
 
-function r_i(cd) = cd/2 + 0.25;
-function r_o(cd) = r_i(cd) + jaw_wall;
+function r_i(cd) = cd/2 + 0.3;
+function r_o(cd) = r_i(cd) + hook_wall;
 
-// Solid ring for a jaw; the bore and mouth are cut later, after the frame is
-// joined on, so the frame can never end up filling the opening.
-module ring_2d(cd) circle(r = r_o(cd));
+// Solid disc for a hook; bore and mouth are cut after the bar is joined on,
+// so the bar can never end up filling the bore.
+module hook_solid(cd) circle(r = r_o(cd));
 
-// The cut that opens a jaw: bore plus a mouth facing `ang`, minus the lips.
-module jaw_cut_2d(cd, ang) {
-    oh = cd * mouth / 2;
-    ch = oh + lip;
-    ri = r_i(cd);
-    difference() {
+// Everything removed to turn that disc into an open crook.
+module hook_cut(cd, ang) {
+    ri = r_i(cd); ro = r_o(cd); rm = (ri + ro) / 2;
+    rotate(ang) difference() {
         union() {
-            circle(r = ri);
-            rotate(ang) translate([-ch, 0]) square([2 * ch, r_o(cd) + 1]);
+            circle(r = ri);                                   // bore
+            polygon([[0,0],                                   // mouth sector
+                     [ro*2*cos(-open_ang/2), ro*2*sin(-open_ang/2)],
+                     [ro*2.4, 0],
+                     [ro*2*cos(open_ang/2),  ro*2*sin(open_ang/2)]]);
         }
-        // lips stay behind: they narrow the mouth to the specified opening
-        rotate(ang) for (s = [-1, 1])
-            translate([s * ch, sqrt(max(ri*ri - ch*ch, 0.04))]) circle(r = lip);
+        for (s = [-1, 1])                                     // keep rounded tips
+            translate([rm*cos(s*open_ang/2), rm*sin(s*open_ang/2)]) circle(r = hook_wall/2);
     }
 }
 
 module clamp_2d(cd) {
-    cds = cd * small_f;
-    span = r_o(cd) + r_o(cds) + cd * 2.2;     // centre to centre
-    fh   = 2 * r_o(cd);                        // body as deep as the big jaw
+    cds  = cd * small_f;
+    span = r_o(cd) + r_o(cds) + cd * 1.9;
+    off  = r_o(cd) * 0.55;
     difference() {
         union() {
-            hull() {                           // body bar between the two jaws
-                translate([-span/2, 0]) square([0.01, fh], center = true);
-                translate([ span/2, 0]) square([0.01, 2 * r_o(cds)], center = true);
+            hull() {
+                translate([-span/2, -off]) circle(r = bar_w/2);
+                translate([ span/2,  off]) circle(r = bar_w/2);
             }
-            translate([-span/2, 0]) ring_2d(cd);
-            translate([ span/2, 0]) ring_2d(cds);
+            translate([-span/2, -off]) hook_solid(cd);
+            translate([ span/2,  off]) hook_solid(cds);
         }
-        translate([-span/2, 0]) jaw_cut_2d(cd,   90);   // big jaw opens outward (-X)
-        translate([ span/2, 0]) jaw_cut_2d(cds, -90);   // small jaw opens outward (+X)
-        square([span * window, fh - 4 * frame_rail], center = true);
+        translate([-span/2, -off]) hook_cut(cd,   90);   // big hook opens +Y
+        translate([ span/2,  off]) hook_cut(cds, -90);   // small hook opens -Y
+        for (s = [-1, 1])                                 // two windows in the bar
+            translate([s * span * 0.15, s * off * 0.30])
+                rotate(atan2(2*off, span))
+                    square([span * 0.17, bar_w - 2.6], center = true);
     }
 }
 
