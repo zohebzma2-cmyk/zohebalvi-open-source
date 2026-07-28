@@ -39,8 +39,12 @@ module gf_adapter(nx, ny, cw, cd) {
         // capsule socket, chamfered so it self-centres
         translate([0, 0, H - sock_d])
             hull() {
-                rr(cw - 2*foot_ch + sock_cl, cd - 2*foot_ch + sock_cl, corner_r - foot_ch, 0.01);
-                translate([0, 0, foot_ch]) rr(cw + sock_cl, cd + sock_cl, corner_r, sock_d);
+                // true offset: radius grows with the edge, so corners are no
+                // looser than the flats
+                rr(cw - 2*foot_ch + sock_cl, cd - 2*foot_ch + sock_cl,
+                   corner_r - foot_ch + sock_cl/2, 0.01);
+                translate([0, 0, foot_ch])
+                    rr(cw + sock_cl, cd + sock_cl, corner_r + sock_cl/2, sock_d);
             }
     }
 }

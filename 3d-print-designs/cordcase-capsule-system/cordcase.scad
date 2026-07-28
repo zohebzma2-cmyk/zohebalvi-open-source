@@ -183,10 +183,14 @@ module plate(w, d, nx, ny) {
             translate([(i - (nx - 1) / 2) * (w + 3), (j - (ny - 1) / 2) * (d + 3),
                        plate_h - sock_d])
                 hull() {
+                    // A true offset grows the corner radius by the same amount as
+                    // the edge. Keeping the radius fixed shifts the arc centre
+                    // instead, leaving corners sqrt(2)x looser than the flats -
+                    // which is a capsule that rocks diagonally in its socket.
                     rr(w - 2 * foot_ch + sock_cl, d - 2 * foot_ch + sock_cl,
-                       corner_r - foot_ch, 0.01);
+                       corner_r - foot_ch + sock_cl / 2, 0.01);
                     translate([0, 0, foot_ch])
-                        rr(w + sock_cl, d + sock_cl, corner_r, sock_d);
+                        rr(w + sock_cl, d + sock_cl, corner_r + sock_cl / 2, sock_d);
                 }
     }
 }
