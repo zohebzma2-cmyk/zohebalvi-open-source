@@ -17,14 +17,40 @@ you find out in about two hours instead of after a full set.
 
 Seven parts, about 208 cm² of a 225 cm² bed. One plate.
 
-## Settings
+## Settings — PETG on an Adventurer 3C
 
-FlashForge Adventurer 3C, **Adventurer 3 Series 0.4 nozzle** profile.
+**Read this first: the Adventurer 3C's hot end tops out at 240 °C.** PETG is often
+quoted as 230–250; the top of that range is above what this machine will do. Use
+**235 °C** and do not try to set 250 — it will either clamp or refuse.
 
-PLA · 0.2 mm layers · 4 walls · 15 % infill · **supports OFF** · **raft OFF** ·
-fan 100 % with the door open.
+| | |
+|---|---|
+| Nozzle | **235 °C** (240 max — do not exceed) |
+| Bed | **80 °C** |
+| Layer | 0.2 mm |
+| Walls | 4 |
+| Infill | 15 % |
+| Speed | **40–50 mm/s** — slower than PLA |
+| Cooling | **40 %** — not 100 %. Too much fan ruins PETG layer bonding |
+| Enclosure door | **CLOSED** — the opposite of the PLA advice |
+| Supports | OFF |
+| Raft | OFF |
 
-The label is 1 mm thin — give that one 100 % infill and lay it flat.
+The label is 1 mm thin — 100 % infill, laid flat.
+
+### PETG changes what you are measuring
+
+PETG oozes more and squishes wider than PLA, so **expect every press fit to come
+out tighter**, not looser. If the cap or the label will not go in, that is the
+expected direction of error — raise the clearance, do not assume the model is
+wrong. Reference values were reasoned for PLA:
+
+- `cap_cl` 0.35 → try 0.45 if the cap binds
+- `lab_cl` 0.15 → try 0.25 if the label will not seat
+- `dt_cl` 0.35 → try 0.45 if the tiles will not slide
+
+Also give the bed a moment to cool before removing parts. PETG grips a hot plate
+hard enough to pull flakes out of it; on a cold plate the parts release cleanly.
 
 ## What to check, and what to change
 

@@ -61,6 +61,15 @@ rack_fh   = 16;      // how far a divider stands above the ramp
 rack_lip  = 9;       // retaining lip at the low end
 slots     = 3;       // slots per tile
 
+/* [Tile interlock] */
+// Racks and docks tile along X. A dovetail on the +X edge and a matching slot
+// on -X means a row of tiles physically locks together instead of drifting
+// apart in a drawer. Vertical prism, so it needs no support.
+dt_len  = 4;
+dt_neck = 4;
+dt_head = 6;
+dt_cl   = 0.35;
+
 /* [Baseplate] */
 plate_h  = 5.0;
 sock_cl  = 0.4;
@@ -69,6 +78,17 @@ sock_d   = 3.0;      // how deep a case sits into the plate
 $fn = 48;
 
 // ------------------------------------------------------------ primitives
+
+module dt2d(neck, head, len) {
+    polygon([[0, -neck / 2], [len, -head / 2], [len, head / 2], [0, neck / 2]]);
+}
+
+// Tail on +X, slot on -X, cut through the full height of the tile edge.
+module tile_link(L, H, add) {
+    if (add) translate([L / 2, 0, 0]) linear_extrude(H) dt2d(dt_neck, dt_head, dt_len);
+    else translate([-L / 2, 0, -0.5]) linear_extrude(H + 1)
+        dt2d(dt_neck + dt_cl, dt_head + dt_cl, dt_len + dt_cl / 2);
+}
 
 module rr(w, d, r, hh) {
     rr_ = max(min(r, w / 2 - 0.01, d / 2 - 0.01), 0.2);
@@ -154,7 +174,11 @@ module plate(w, d, nx, ny) {
     W = nx * (w + 3) + 6;
     D = ny * (d + 3) + 6;
     difference() {
-        rr(W, D, corner_r, plate_h);
+        union() {
+            rr(W, D, corner_r, plate_h);
+            tile_link(W, plate_h, true);
+        }
+        tile_link(W, plate_h, false);
         for (i = [0:nx - 1], j = [0:ny - 1])
             translate([(i - (nx - 1) / 2) * (w + 3), (j - (ny - 1) / 2) * (d + 3),
                        plate_h - sock_d])
@@ -194,19 +218,34 @@ module rack(cw, cd, n, h = 101) {
                 translate([0, -R / 2 + 1, 0]) cube([L, 2, rack_base], center = true);
                 translate([0, R / 2 - 1, rise / 2]) cube([L, 2, rack_base + rise], center = true);
             }
-            // dividers, vertical, running up the slope
-            for (i = [0:n])
-                translate([-L / 2 + rack_fin / 2 + i * rack_pitch(cw), 0, 0])
+            // dividers, running the FULL length of the slope so a capsule is
+            // guided along its whole footprint rather than only at the front
+            for (i = [0:n]) {
+                outer = (i == 0 || i == n);
+                t = outer ? rack_wall : rack_fin;      // outer ones are proper side walls
+                // A thicker outer wall must stay INSIDE the tile edge, or two
+                // tiles butted at pitch overlap and will not seat.
+                x = (i == 0) ? -L / 2 + t / 2
+                  : (i == n) ?  L / 2 - t / 2
+                  : -L / 2 + rack_fin / 2 + i * rack_pitch(cw);
+                translate([x, 0, 0])
                     hull() {
                         translate([0, -R / 2 + 1, 0])
-                            cube([rack_fin, 2, rack_base + rack_fh * 0.45], center = true);
+                            cube([t, 2, rack_base + rack_fh], center = true);
                         translate([0, R / 2 - 1, rise / 2])
-                            cube([rack_fin, 2, rack_base + rise + rack_fh], center = true);
+                            cube([t, 2, rack_base + rise + rack_fh], center = true);
                     }
+            }
+            // back wall at the high end: stops a capsule being pushed out the
+            // back, and ties every divider together so the tile is rigid
+            translate([0, R / 2 - rack_wall / 2, (rack_base + rise + rack_fh) / 2])
+                cube([L, rack_wall, rack_base + rise + rack_fh], center = true);
             // retaining lip at the low end
             translate([0, -R / 2 + rack_wall / 2, rack_base / 2 + rack_lip / 2])
                 cube([L, rack_wall, rack_base + rack_lip], center = true);
+            tile_link(L, rack_base, true);
         }
+        tile_link(L, rack_base, false);
         translate([0, 0, -50]) cube([L * 4, R * 4, 100], center = true);
     }
 }
