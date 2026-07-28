@@ -1,48 +1,66 @@
 // =====================================================================
-// CordClamp - double-ended snap clip
+// CordClamp - two-hook cable clip
 //
-// Two open C-jaws on a common spine. Push a cable past the lips of a jaw
-// and it snaps in and is held; use both ends to gather a loop, or to hold
-// two runs side by side.
+// A big open hook at one end and a smaller opposed hook at the other, joined
+// by a flat frame with lightening windows. Loop a cable, drop the bundle into
+// the big jaw and the tail into the small one; because the jaws face opposite
+// ways the loop is trapped rather than able to roll out.
 //
-// Extruded flat, so every face is vertical: prints on its side with no
-// supports and the layer lines run around the jaw, which is the strong
-// direction for a part that has to spring open.
+// Extruded flat: every face vertical, no supports, and the layers stack through
+// the thickness so each jaw flexes WITHIN a layer rather than across layer
+// bonds - the strong direction for a part whose job is to spring.
 // =====================================================================
 
-cable_d   = 6.0;     // cable the jaw is sized for
+cable_d   = 6.0;     // cable the big jaw is sized for
+small_f   = 0.60;    // small jaw as a fraction of the big one
 jaw_wall  = 2.2;     // jaw wall thickness
-mouth     = 0.72;    // mouth opening as a fraction of cable_d - under 1 so it snaps
-lip       = 0.7;     // retaining bulb at each mouth tip
-depth     = 8.0;     // how wide the clip is (the extrusion)
-spine_w   = 5.0;     // bar joining the two jaws
-gap       = 3.0;     // clear space between the jaws
+mouth     = 0.72;    // FINAL opening as a fraction of the jaw's cable, lips included
+lip       = 0.7;     // retaining lip radius at each mouth tip
+depth     = 8.0;     // extrusion - how wide the clip is
+frame_rail = 2.4;    // frame rail thickness - slim, so the jaws stand proud
+window    = 0.40;    // window length as a fraction of span - must not reach the bores
 $fn = 72;
 
-r_in  = cable_d / 2 + 0.25;
-r_out = r_in + jaw_wall;
-pitch = 2 * r_out + gap;
+function r_i(cd) = cd/2 + 0.25;
+function r_o(cd) = r_i(cd) + jaw_wall;
 
-module jaw_2d() {
-    difference() {
-        circle(r = r_out);
-        circle(r = r_in);
-        // mouth, opening toward +Y like the reference
-        translate([-cable_d * mouth / 2, 0]) square([cable_d * mouth, r_out + 1]);
-    }
-    // retaining bulbs so a seated cable cannot fall back out
-    for (s = [-1, 1])
-        translate([s * (cable_d * mouth / 2 + lip / 2), sqrt(max(r_in*r_in - pow(cable_d*mouth/2,2), 0.01))])
-            circle(r = lip);
-}
+// Solid ring for a jaw; the bore and mouth are cut later, after the frame is
+// joined on, so the frame can never end up filling the opening.
+module ring_2d(cd) circle(r = r_o(cd));
 
-module clamp_2d() {
-    for (s = [-1, 1]) translate([s * pitch / 2, 0]) jaw_2d();
-    // spine joining them, with a lightening window
+// The cut that opens a jaw: bore plus a mouth facing `ang`, minus the lips.
+module jaw_cut_2d(cd, ang) {
+    oh = cd * mouth / 2;
+    ch = oh + lip;
+    ri = r_i(cd);
     difference() {
-        translate([0, -r_out + spine_w / 2]) square([pitch, spine_w], center = true);
-        translate([0, -r_out + spine_w / 2]) square([gap * 0.9, spine_w - 2.4], center = true);
+        union() {
+            circle(r = ri);
+            rotate(ang) translate([-ch, 0]) square([2 * ch, r_o(cd) + 1]);
+        }
+        // lips stay behind: they narrow the mouth to the specified opening
+        rotate(ang) for (s = [-1, 1])
+            translate([s * ch, sqrt(max(ri*ri - ch*ch, 0.04))]) circle(r = lip);
     }
 }
 
-linear_extrude(depth) clamp_2d();
+module clamp_2d(cd) {
+    cds = cd * small_f;
+    span = r_o(cd) + r_o(cds) + cd * 2.2;     // centre to centre
+    fh   = 2 * r_o(cd);                        // body as deep as the big jaw
+    difference() {
+        union() {
+            hull() {                           // body bar between the two jaws
+                translate([-span/2, 0]) square([0.01, fh], center = true);
+                translate([ span/2, 0]) square([0.01, 2 * r_o(cds)], center = true);
+            }
+            translate([-span/2, 0]) ring_2d(cd);
+            translate([ span/2, 0]) ring_2d(cds);
+        }
+        translate([-span/2, 0]) jaw_cut_2d(cd,   90);   // big jaw opens outward (-X)
+        translate([ span/2, 0]) jaw_cut_2d(cds, -90);   // small jaw opens outward (+X)
+        square([span * window, fh - 4 * frame_rail], center = true);
+    }
+}
+
+linear_extrude(depth) clamp_2d(cable_d);
