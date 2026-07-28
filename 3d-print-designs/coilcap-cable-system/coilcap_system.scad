@@ -22,7 +22,7 @@ pitch      = 25;     // grid pitch
 wall       = 2.8;    // side + back wall
 front_wall = 4.4;    // front wall, thicker to host the flush label pocket
 floor_th   = 1.6;    // floor
-corner_r   = 4.0;    // outer corner radius
+corner_r   = 7.0;    // outer corner radius - soft, not the tight parts-bin square
 // Three-stage foot: a straight section that locates in the baseplate bore,
 // then a 45 deg ramp out to full size. The gaps between the per-cell feet are
 // what the baseplate's webs sit in, so a multi-cell box drops flat onto a grid.
@@ -32,6 +32,15 @@ foot_ramp  = 1.0;    // 45 deg ramp out to full width
 mouth_ch   = 0.8;    // outward chamfer at the top of the wall
 
 // stacking engagement = (wall - mouth_ch) - foot_inset = 1.0 mm
+
+/* [Shell styling] */
+// The side walls draw inward as they rise, so the profile you see across a desk
+// is a tapered caddy rather than a flat-sided bin. Front and back stay vertical:
+// the front carries the label pocket and the back keeps the cavity square.
+// Taper scales with width and caps out, so narrow bins keep a usable label.
+taper_max  = 2.5;    // most the rim pulls in per side
+taper_frac = 0.07;   // ...as a fraction of box width, whichever is smaller
+top_bevel  = 0.8;    // 45 deg bevel on the outer top edge
 
 /* [Angled bin] */
 // The angled variant cuts the front down and slopes the opening back up to
@@ -95,7 +104,24 @@ module feet(nx, ny) {
         }
 }
 
-function label_width(W) = min(W - 2 * lab_margin, 60);
+function body_taper(W) = min(taper_max, W * taper_frac);
+
+// The label lives in the front wall at the top, where the box is narrowest.
+function label_width(W) = min(W - 2 * body_taper(W) - 2 * lab_margin, 60);
+
+// A 45 deg bevel taken off the outer top edge. Kept inside 0.8 mm so it never
+// eats into the rim surface a stacked foot lands on.
+module top_edge_bevel(W0, D, hh) {
+    W = W0 - 2 * body_taper(W0);
+    difference() {
+        translate([0, 0, hh - top_bevel]) rr(W + 2, D + 2, corner_r, top_bevel + 1);
+        hull() {
+            translate([0, 0, hh - top_bevel - 0.01]) rr(W, D, corner_r, 0.01);
+            translate([0, 0, hh]) rr(W - 2 * top_bevel, D - 2 * top_bevel,
+                                     corner_r - top_bevel, 0.01);
+        }
+    }
+}
 
 // Everything above the plane running from the front edge at `fh` back up to
 // the rear rim at `hh`. Subtracting it leaves an upward-facing slope, which
@@ -115,24 +141,30 @@ module box(nx, ny, hh, ang = false) {
     cav_y = (front_wall - wall) / 2;
     cav_z = foot_h + floor_th;              // floor sits on top of the feet, not through them
     lw = label_width(W);
+    tp = body_taper(W);
     ptop = front_height(hh, ang);           // top of the front wall = top of the label pocket
     union() {
         difference() {
             union() {
                 feet(nx, ny);
-                translate([0, 0, foot_h]) rr(W, D, corner_r, hh - foot_h);
+                hull() {   // side walls draw in as they rise; depth unchanged
+                    translate([0, 0, foot_h]) rr(W, D, corner_r, 0.01);
+                    translate([0, 0, hh - 0.01]) rr(W - 2 * tp, D, corner_r, 0.01);
+                }
             }
             // cavity, with an outward chamfer at the mouth that catches the foot above
-            hull() {
-                translate([0, cav_y, cav_z])
-                    rr(W - 2 * wall, cav_d, corner_r - wall, hh - cav_z - mouth_ch);
+            hull() {   // cavity follows the taper so the wall stays 2.8 mm throughout
+                translate([0, cav_y, cav_z]) rr(W - 2 * wall, cav_d, corner_r - wall, 0.01);
+                translate([0, cav_y, hh - mouth_ch])
+                    rr(W - 2 * tp - 2 * wall, cav_d, corner_r - wall, 0.01);
                 translate([0, cav_y, hh - 0.01])
-                    rr(W - 2 * wall + 2 * mouth_ch, cav_d + 2 * mouth_ch,
+                    rr(W - 2 * tp - 2 * wall + 2 * mouth_ch, cav_d + 2 * mouth_ch,
                        corner_r - wall + mouth_ch, 0.01);
             }
             // label pocket: sunk into the front wall, open at the front and top
             translate([-lw / 2, -D / 2 - 0.1, ptop - lab_h])
                 cube([lw, lab_pocket + 0.1, lab_h + 1]);
+            top_edge_bevel(W, D, hh);
             if (ang) angle_cut(W, D, hh, ptop);
         }
         // retaining lips down each side of the pocket
